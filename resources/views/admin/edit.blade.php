@@ -7,33 +7,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background: #f0f2f5; min-height: 100vh; }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; min-height: 100vh; font-size: 14px; }
 
-        .topbar {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            padding: 0 32px; height: 64px;
-            display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
-            position: sticky; top: 0; z-index: 100;
+        .top-navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 5px 0; background-color: #122333;
+            max-width: 1000px; font-weight: bold; margin: 0 auto;
         }
-        .topbar-brand { display: flex; align-items: center; gap: 12px; color: #fff; font-size: 20px; font-weight: 700; }
-        .topbar-brand span.icon {
-            width: 36px; height: 36px;
-            background: linear-gradient(135deg, #e94560, #c62a47);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;
+        .search-bar { flex: 1; max-width: 500px; margin: 0 30px; position: relative; }
+        .search-bar input {
+            width: 100%; padding: 5px 10px; border: none;
+            border-radius: 20px; background-color: white;
         }
-        .topbar-btn {
-            background: rgba(255,255,255,0.12); color: #fff;
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px;
-            text-decoration: none; display: flex; align-items: center; gap: 6px; transition: all 0.2s;
+        .nav-item a { color: #fff !important; }
+        .nav-item { padding: 0 5px; }
+        .search-btn {
+            width: 50px; height: 30px; color: black; background-color: white;
+            border-radius: 30px; border: none; position: absolute; right: 0;
         }
-        .topbar-btn:hover { background: rgba(255,255,255,0.22); }
+        .navbar-nav { display: flex; list-style: none; margin: 0; padding: 0; }
 
-        .content { padding: 32px; max-width: 900px; margin: 0 auto; }
+        .content { padding: 32px; max-width: 1000px; margin: 0 auto; }
 
         .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6b7280; margin-bottom: 20px; }
-        .breadcrumb a { color: #e94560; text-decoration: none; }
+        .breadcrumb a { color: #0066cc; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
 
         .form-card {
@@ -41,17 +38,18 @@
             box-shadow: 0 1px 20px rgba(0,0,0,0.07); overflow: hidden;
         }
         .form-card-header {
-            background: linear-gradient(135deg, #0f3460, #1a1a2e);
-            padding: 24px 32px; color: #fff;
+            background: #f8fafc;
+            padding: 24px 32px; color: #0f172a;
             display: flex; align-items: center; gap: 16px;
+            border-bottom: 1px solid #f1f5f9;
         }
         .product-thumb-header {
             width: 64px; height: 64px; border-radius: 12px;
-            object-fit: contain; border: 2px solid rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.1); padding: 4px;
+            object-fit: contain; border: 2px solid #e2e8f0;
+            background: #fff; padding: 4px;
         }
         .form-card-header h2 { font-size: 20px; font-weight: 700; }
-        .form-card-header p { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+        .form-card-header p { font-size: 13px; color: #64748b; margin-top: 4px; }
 
         .form-body { padding: 32px; }
 
@@ -63,11 +61,10 @@
         }
 
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
-        .form-grid.full { grid-template-columns: 1fr; }
+        .form-grid.span2 { grid-column: span 2; }
         .form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
 
         .form-group { display: flex; flex-direction: column; }
-        .form-group.span2 { grid-column: span 2; }
         label { font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 6px; }
         label .req { color: #e94560; margin-left: 3px; }
 
@@ -78,8 +75,8 @@
             transition: all 0.2s; outline: none; background: #fafafa; width: 100%;
         }
         input:focus, select:focus, textarea:focus {
-            border-color: #3b82f6; background: #fff;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+            border-color: #0066cc; background: #fff;
+            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
         }
 
         /* Image section */
@@ -89,29 +86,22 @@
         }
         .current-img-wrap p { font-size: 12px; color: #6b7280; margin-bottom: 8px; font-weight: 500; }
         .current-img {
-            width: 120px; height: 120px; object-fit: contain;
+            width: 150px; height: 120px; object-fit: contain;
             border-radius: 12px; border: 1.5px solid #e5e7eb;
-            background: #f9fafb; padding: 8px;
-        }
-        .no-img {
-            width: 120px; height: 120px; background: #f3f4f6;
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            font-size: 32px; color: #9ca3af;
+            background: #fff; padding: 2px;
         }
         .file-upload-wrap {
             flex: 1; border: 2px dashed #e5e7eb; border-radius: 12px;
             padding: 20px; text-align: center; cursor: pointer;
             transition: all 0.2s; background: #fafafa;
         }
-        .file-upload-wrap:hover { border-color: #3b82f6; background: #eff6ff; }
+        .file-upload-wrap:hover { border-color: #0066cc; background: #f0f7ff; }
         .file-upload-wrap input[type="file"] { display: none; }
-        .file-upload-wrap .upload-icon { font-size: 28px; margin-bottom: 6px; }
-        .file-upload-wrap p { font-size: 14px; color: #6b7280; }
-        .file-upload-wrap small { font-size: 12px; color: #9ca3af; }
         #preview-img {
-            max-width: 100px; max-height: 100px; object-fit: contain;
+            max-width: 150px; max-height: 120px; object-fit: contain;
             border-radius: 8px; border: 1px solid #e5e7eb;
             display: none; margin: 10px auto 0;
+            background: #fff;
         }
 
         .error-msg { color: #ef4444; font-size: 12px; margin-top: 4px; }
@@ -120,7 +110,6 @@
             color: #991b1b; padding: 14px 20px; border-radius: 10px;
             margin-bottom: 24px; font-size: 14px;
         }
-        .alert-error ul { margin-top: 8px; padding-left: 20px; }
 
         .form-actions {
             display: flex; gap: 12px; justify-content: flex-end;
@@ -136,27 +125,71 @@
         .btn-cancel:hover { border-color: #9ca3af; background: #f9fafb; }
         .btn-submit {
             padding: 12px 32px; border-radius: 10px;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            background: #0066cc;
             color: #fff; border: none; font-size: 14px; font-weight: 600;
             cursor: pointer; transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(59,130,246,0.35);
+            box-shadow: 0 4px 15px rgba(0,102,204,0.25);
             display: inline-flex; align-items: center; gap: 6px;
         }
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,130,246,0.45); }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,102,204,0.35); }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
-<div class="topbar">
-    <div class="topbar-brand">
-        <span class="icon">💻</span>
-        Admin Panel
+<header>
+    <div style="text-align:center; max-width:1000px; margin:0 auto">
+        <img src="{{ asset('images/banner.png') }}" width="1000px">
+        <nav class="top-navbar">
+            <div style="display:flex; align-items:center;">
+                <ul class="navbar-nav">
+                    @foreach($danhMucs as $category)
+                        <li class="nav-item">
+                            <a style="color:white; text-decoration:none; padding: 0 10px;" href="{{ url('laptop/theloai/'.$category->id) }}">
+                                {{ $category->ten_danh_muc }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="search-bar">
+                <form method="post" action="{{ url('/timkiem') }}">
+                    @csrf
+                    <input type="text" name="keyword" placeholder="Tìm kiếm laptop...">
+                    <button class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding-right:15px">
+                @auth
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-outline-light dropdown-toggle btn-sm" data-toggle="dropdown" style="font-weight: 600; font-size: 13px;">
+                            <i class="fa fa-user-circle"></i> {{ Auth::user()->name }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right shadow border-0" style="font-size: 13px; position: absolute; z-index: 1001;">
+                            <div class="dropdown-header">Tài khoản</div>
+                            <a class="dropdown-item" href="{{ route('admin.index') }}"><i class="fa fa-dashboard mr-2"></i> Quản lý</a>
+                            <div class="dropdown-divider"></div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="dropdown-item text-danger" onclick="event.preventDefault(); this.closest('form').submit();" style="cursor: pointer;">
+                                    <i class="fa fa-sign-out mr-2"></i> Đăng xuất
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Đăng nhập</a>
+                @endauth
+                <a href="{{ url('/') }}" style="color:white; text-decoration:none; font-size:13px"><i class="fa fa-home"></i> Home</a>
+            </div>
+        </nav>
     </div>
-    <div style="display:flex;gap:12px">
-        <a href="{{ route('admin.index') }}" class="topbar-btn">← Danh sách</a>
-        <a href="{{ url('/') }}" class="topbar-btn">🏠 Trang chủ</a>
-    </div>
-</div>
+</header>
+
+<!-- JS Libraries for Dropdown -->
+<script src="{{ asset('library/jquery-3.7.1.js') }}"></script>
+<script src="{{ asset('library/popper.min.js') }}"></script>
+<script src="{{ asset('library/bootstrap.bundle.min.js') }}"></script>
 
 <div class="content">
 

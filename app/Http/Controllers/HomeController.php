@@ -20,8 +20,8 @@ class HomeController extends Controller
         $idDanhMuc = $request->query('danh_muc');
         $sort      = $request->query('sort'); // 'asc' hoặc 'desc'
 
-        // Xây dựng query
-        $query = SanPham::with('danhMuc');
+        // Xây dựng query chỉ lấy các sản phẩm có status = 1 (chưa xóa)
+        $query = SanPham::with('danhMuc')->where('status', 1);
 
         if ($idDanhMuc) {
             $query->where('id_danh_muc', $idDanhMuc);
@@ -58,9 +58,11 @@ class HomeController extends Controller
         $sanPhams = collect();
 
         if ($tuKhoa !== '') {
-            $query = SanPham::with('danhMuc')
-                ->where('tieu_de', 'LIKE', '%' . $tuKhoa . '%')
-                ->orWhere('ten', 'LIKE', '%' . $tuKhoa . '%');
+            $query = SanPham::with('danhMuc')->where('status', 1)
+                ->where(function ($q) use ($tuKhoa) {
+                    $q->where('tieu_de', 'LIKE', '%' . $tuKhoa . '%')
+                      ->orWhere('ten', 'LIKE', '%' . $tuKhoa . '%');
+                });
 
             if ($sort === 'asc' || $sort === 'desc') {
                 $query->orderBy('gia', $sort);

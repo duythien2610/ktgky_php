@@ -12,17 +12,16 @@
         </span>
 
         @if($tuKhoa !== '' && $sanPhams->count() > 0)
-            <a href="{{ url('/tim-kiem') }}?q={{ $tuKhoa }}&sort=asc"
-               style="background:#fff; border:1px solid #ccc; padding:6px 15px; border-radius:4px; color:#333; text-decoration:none; font-size:0.9rem; {{ request('sort') === 'asc' ? 'border-color:#28a745; color:#28a745;' : '' }}">
+            <a href="{{ url('/tim-kiem') }}?{{ http_build_query(array_merge(request()->query(), ['sort' => 'asc'])) }}"
+               style="background:#fff; border:1px solid #ccc; padding:6px 15px; border-radius:4px; color:#333; text-decoration:none; font-size:0.9rem; <?php echo (request('sort') === 'asc') ? 'border-color:#28a745; color:#28a745;' : ''; ?>">
                 Giá tăng dần
             </a>
-            <a href="{{ url('/tim-kiem') }}?q={{ $tuKhoa }}&sort=desc"
-               style="background:#fff; border:1px solid #ccc; padding:6px 15px; border-radius:4px; color:#333; text-decoration:none; font-size:0.9rem; {{ request('sort') === 'desc' ? 'border-color:#28a745; color:#28a745;' : '' }}">
+            <a href="{{ url('/tim-kiem') }}?{{ http_build_query(array_merge(request()->query(), ['sort' => 'desc'])) }}"
+               style="background:#fff; border:1px solid #ccc; padding:6px 15px; border-radius:4px; color:#333; text-decoration:none; font-size:0.9rem; <?php echo (request('sort') === 'desc') ? 'border-color:#28a745; color:#28a745;' : ''; ?>">
                 Giá giảm dần
             </a>
             @if(request('sort'))
-                <a href="{{ url('/tim-kiem') }}?q={{ $tuKhoa }}"
-                   style="font-size:0.85rem; color:#d70018; text-decoration:none; margin-left:5px;">
+                <a href="{{ url('/tim-kiem') }}?q={{ $tuKhoa }}" style="font-size:0.85rem; color:#d70018; text-decoration:none; margin-left:5px;">
                     ✕ Bỏ lọc
                 </a>
             @endif
@@ -47,7 +46,7 @@
         <div class="list-laptop">
             @foreach($sanPhams as $sp)
                 <a href="{{ url('/san-pham/' . $sp->id) }}" class="laptop">
-                    <img src="{{ asset('storage/image/' . $sp->hinh_anh) }}"
+                    <img src="{{ asset('storage/' . $sp->hinh_anh) }}"
                          alt="{{ $sp->tieu_de }}"
                          onerror="this.src='https://via.placeholder.com/200x150?text=No+Image';">
                     <div class="laptop-info">

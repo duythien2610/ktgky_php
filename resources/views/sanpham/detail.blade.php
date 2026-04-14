@@ -14,7 +14,7 @@
 
         {{-- Ảnh sản phẩm --}}
         <div style="flex:0 0 260px; text-align:center;">
-            <img src="/images/{{ $sp->hinh_anh }}"
+            <img src="{{ asset('storage/' . $sp->hinh_anh) }}"
                  alt="{{ $sp->ten }}"
                  style="max-width:260px; max-height:200px; object-fit:contain;"
                  onerror="this.src='https://via.placeholder.com/260x200?text=No+Image'">

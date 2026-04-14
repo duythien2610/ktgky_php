@@ -12,10 +12,6 @@ class DanhMuc extends Model
 
     public $timestamps = false;
 
-    protected $fillable = [
-        'ten_danh_muc',
-    ];
-
     /**
      * Quan hệ: Danh mục có nhiều sản phẩm
      */

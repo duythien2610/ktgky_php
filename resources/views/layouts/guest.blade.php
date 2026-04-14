@@ -87,8 +87,16 @@
 <div class="auth-wrapper">
     {{-- Logo --}}
     <div class="auth-logo">
-        <a href="/"><i class="fa fa-laptop"></i> Laptop<span>Store</span></a>
-        <div class="subtitle">Hệ thống cửa hàng Laptop uy tín</div>
+        <a href="/">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="2" y1="17" x2="22" y2="17"></line>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            Laptop<span>Store</span>
+        </a>
+        <div class="subtitle">Đăng nhập để nhận ưu đãi hấp dẫn</div>
     </div>
 
     {{-- Nội dung form --}}

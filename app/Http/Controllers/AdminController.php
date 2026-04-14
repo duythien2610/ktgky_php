@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\SanPham;
 use App\Models\DanhMuc;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
     /**
      * Hiển thị danh sách tất cả sản phẩm (có phân trang)
      */
-    public function index()
+    public function index(Request $r)
     {
-        $sanPhams   = SanPham::with('danhMuc')->orderBy('id', 'desc')->get();
+        $query = SanPham::with('danhMuc')->where('status', 1);
+        
+        if ($r->has('danh_muc')) {
+            $query->where('id_danh_muc', $r->danh_muc);
+        }
+
+        $sanPhams   = $query->orderBy('id', 'desc')->get();
         $categories = DanhMuc::all();
         return view('admin.index', compact('sanPhams', 'categories'));
     }
@@ -65,9 +72,11 @@ class AdminController extends Controller
         if ($r->hasFile('hinh_anh')) {
             $file = $r->file('hinh_anh');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/image', $fileName);
-            $data['hinh_anh'] = 'image/' . $fileName;
+            $file->storeAs('', $fileName, 'public');
+            $data['hinh_anh'] = $fileName;
         }
+
+        $data['status'] = 1;
 
         SanPham::create($data);
 
@@ -79,7 +88,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $sanPham    = SanPham::findOrFail($id);
+        $sanPham    = SanPham::where('status', 1)->findOrFail($id);
         $danhMucs   = DanhMuc::all();
         $categories = $danhMucs;
         return view('admin.edit', compact('sanPham', 'danhMucs', 'categories'));
@@ -90,7 +99,7 @@ class AdminController extends Controller
      */
     public function update(Request $r, $id)
     {
-        $sanPham = SanPham::findOrFail($id);
+        $sanPham = SanPham::where('status', 1)->findOrFail($id);
 
         $r->validate([
             'ten'          => 'required|string|max:255',
@@ -123,12 +132,12 @@ class AdminController extends Controller
         if ($r->hasFile('hinh_anh')) {
             // Xóa ảnh cũ nếu có
             if ($sanPham->hinh_anh) {
-                \Storage::delete('public/' . $sanPham->hinh_anh);
+                Storage::disk('public')->delete($sanPham->hinh_anh);
             }
             $file = $r->file('hinh_anh');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/image', $fileName);
-            $data['hinh_anh'] = 'image/' . $fileName;
+            $file->storeAs('', $fileName, 'public');
+            $data['hinh_anh'] = $fileName;
         }
 
         $sanPham->update($data);
@@ -143,12 +152,8 @@ class AdminController extends Controller
     {
         $sanPham = SanPham::findOrFail($id);
 
-        // Xóa ảnh nếu có
-        if ($sanPham->hinh_anh) {
-            \Storage::delete('public/' . $sanPham->hinh_anh);
-        }
-
-        $sanPham->delete();
+        $sanPham->status = 0;
+        $sanPham->save();
 
         return redirect()->route('admin.index')->with('success', 'Xóa sản phẩm thành công!');
     }

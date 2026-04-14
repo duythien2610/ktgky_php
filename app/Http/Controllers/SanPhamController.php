@@ -8,13 +8,15 @@ use App\Models\DonHang;
 use App\Models\ChiTietDonHang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderSuccessMail;
 
 class SanPhamController extends Controller
 {
     // Hiển thị trang chi tiết sản phẩm
     public function detail($id)
     {
-        $sp = SanPham::findOrFail($id);
+        $sp = SanPham::where('status', 1)->findOrFail($id);
         return view('sanpham.detail', compact('sp'));
     }
 
@@ -24,7 +26,7 @@ class SanPhamController extends Controller
         $id = $r->id_sp;
         $soLuong = max(1, (int)$r->so_luong);
 
-        $sp = SanPham::findOrFail($id);
+        $sp = SanPham::where('status', 1)->findOrFail($id);
 
         $cart = session()->get('cart', []);
 
@@ -79,8 +81,10 @@ class SanPhamController extends Controller
             'user_id'              => Auth::id() ?? 0,
         ]);
 
-        // Thêm chi tiết đơn hàng
+        // Thêm chi tiết đơn hàng & Tính tổng cộng
+        $tongTien = 0;
         foreach ($cart as $item) {
+            $tongTien += $item['gia'] * $item['so_luong'];
             DB::table('chi_tiet_don_hang')->insert([
                 'ma_don_hang' => $maDonHang,
                 'laptop_id'   => $item['id'],
@@ -89,9 +93,19 @@ class SanPhamController extends Controller
             ]);
         }
 
+        // Gửi email xác nhận (nếu có user đăng nhập và có email)
+        if (Auth::check() && Auth::user()->email) {
+            try {
+                Mail::to(Auth::user()->email)->send(new OrderSuccessMail($maDonHang, $cart, $tongTien));
+            } catch (\Exception $e) {
+                // Log error hoặc bỏ qua để không làm gián đoạn luồng đặt hàng
+                \Log::error("Email sending failed: " . $e->getMessage());
+            }
+        }
+
         // Xóa giỏ hàng
         session()->forget('cart');
 
-        return redirect()->route('giohang.index')->with('success', 'Đặt hàng thành công! Mã đơn hàng: #' . $maDonHang);
+        return redirect()->route('giohang.index')->with('success', 'Đặt hàng thành công! Một email xác nhận đã được gửi đến bạn. Mã đơn hàng: #' . $maDonHang);
     }
 }

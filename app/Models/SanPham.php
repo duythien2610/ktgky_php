@@ -15,30 +15,8 @@ class SanPham extends Model
         'tieu_de', 'ten', 'gia', 'hinh_anh', 'id_danh_muc',
         'bao_hanh', 'cpu', 'ram', 'luu_tru', 'man_hinh',
         'chip_do_hoa', 'he_dieu_hanh', 'pin', 'khoi_luong', 'bao_mat',
-    ];
-
-        'tieu_de',
-        'ten',
-        'gia',
-        'hinh_anh',
-        'id_danh_muc',
-        'bao_hanh',
-        'series_model',
-        'mau_sac',
-        'nhu_cau',
-        'cpu',
-        'chip_do_hoa',
-        'man_hinh',
-        'webcam',
-        'ram',
-        'luu_tru',
-        'cong_ket_noi',
-        'ket_noi_khong_day',
-        'ban_phim',
-        'he_dieu_hanh',
-        'pin',
-        'khoi_luong',
-        'bao_mat',
+        'series_model', 'mau_sac', 'nhu_cau', 'webcam', 'cong_ket_noi',
+        'ket_noi_khong_day', 'ban_phim', 'status'
     ];
 
     /**

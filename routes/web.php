@@ -31,22 +31,7 @@ Route::get('/dashboard', function () {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tim-kiem', [HomeController::class, 'timKiem'])->name('tim-kiem');
 
-// ===== CHI TIẾT SẢN PHẨM & GIỎ HÀNG (SANG) =====
-// TODO: Sang thêm vào đây sau khi tạo SanPhamController
-// Route::get('/san-pham/{id}', [SanPhamController::class, 'detail'])->name('sanpham.detail');
-// Route::post('/gio-hang/them', [SanPhamController::class, 'themVaoGio'])->name('giohang.them');
-// Route::get('/gio-hang', [SanPhamController::class, 'xemGio'])->name('giohang.index');
-// Route::post('/gio-hang/xoa/{id}', [SanPhamController::class, 'xoaKhoiGio'])->name('giohang.xoa');
-// Route::post('/dat-hang', [SanPhamController::class, 'datHang'])->name('giohang.dathang');
 
-// ===== QUẢN LÝ SẢN PHẨM (NAM) =====
-// TODO: Nam thêm vào đây sau khi tạo AdminController
-// Route::get('/admin/san-pham', [AdminController::class, 'index'])->name('admin.index');
-// Route::get('/admin/san-pham/them', [AdminController::class, 'create'])->name('admin.create');
-// Route::post('/admin/san-pham/them', [AdminController::class, 'store'])->name('admin.store');
-// Route::get('/admin/san-pham/sua/{id}', [AdminController::class, 'edit'])->name('admin.edit');
-// Route::post('/admin/san-pham/sua/{id}', [AdminController::class, 'update'])->name('admin.update');
-// Route::post('/admin/san-pham/xoa/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 
 // ===== DASHBOARD & PROFILE (Laravel Breeze - Không sửa) =====
 Route::get('/dashboard', function () {
@@ -66,4 +51,4 @@ Route::get('/gio-hang', [SanPhamController::class, 'xemGio'])->name('giohang.ind
 Route::post('/gio-hang/xoa/{id}', [SanPhamController::class, 'xoaKhoiGio'])->name('giohang.xoa');
 Route::post('/dat-hang', [SanPhamController::class, 'datHang'])->name('giohang.dathang');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

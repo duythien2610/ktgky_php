@@ -10,28 +10,24 @@
     <link rel="stylesheet" href="{{ asset('library/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <script src="{{ asset('library/jquery-3.7.1.js') }}"></script>
-    <script src="{{ asset('library/popper.min.js') }}"></script>
-    <script src="{{ asset('library/bootstrap.bundle.min.js') }}"></script>
-
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             font-size: 14px;
-            background: #fff; /* matching image background */
+            background: #fff;
         }
 
         .container-main {
-            max-width: 1200px; /* Slightly wider to fit 5 items comfortably */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
         }
 
         /* ===== NAVBAR ===== */
         .navbar-custom {
-            background-color: #1a2732; /* dark blueish slate matching the image */
+            background-color: #1a2732;
             padding: 12px 0;
         }
 
@@ -48,7 +44,7 @@
             transition: color 0.2s;
         }
         .brand-list a:hover {
-            color: #28a745; /* secondary color */
+            color: #28a745;
         }
 
         .search-container {
@@ -117,9 +113,6 @@
             background-color: #218838;
             color: white;
         }
-        .user-auth-btn.dropdown-toggle::after {
-            display: none; /* Hide default bootstrap caret as we use font-awesome */
-        }
 
         /* ===== LAPTOP GRID ===== */
         .list-laptop {
@@ -167,16 +160,17 @@
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
+            line-clamp: 2;
             -webkit-box-orient: vertical;
             margin-bottom: 8px;
             text-align: center;
         }
         .laptop-info .laptop-price {
-            color: #d70018; /* Red price */
+            color: #d70018;
             font-weight: 700;
             font-size: 1rem;
             text-align: center;
-            font-style: italic; /* italicize price like in the image */
+            font-style: italic;
         }
 
         /* Empty state */
@@ -225,7 +219,8 @@
         <div class="brand-list">
             @if(isset($categories))
                 @foreach($categories as $dm)
-                    <a href="{{ url('/') }}?danh_muc={{ $dm->id }}" style="{{ request('danh_muc') == $dm->id ? 'color:#28a745;' : '' }}">
+                    <a href="{{ url('/') }}?danh_muc={{ $dm->id }}"
+                       @if(request('danh_muc') == $dm->id) style="color:#28a745;" @endif>
                         {{ $dm->ten_danh_muc }}
                     </a>
                 @endforeach
@@ -254,28 +249,25 @@
             <div style="display:flex; align-items:center; gap:6px;">
                 @auth
                     <div class="dropdown">
-                        <button type="button" class="btn user-auth-btn dropdown-toggle" data-bs-toggle="dropdown">
-                            {{ Auth::user()->name }} <i class="fa fa-caret-down" style="margin-left:3px;"></i>
+                        <button type="button" class="btn user-auth-btn dropdown-toggle" data-toggle="dropdown">
+                            {{ Auth::user()->name }}
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <a class="dropdown-item" href="{{ url('/admin/san-pham') }}">
-                                    <i class="fa fa-cog me-2"></i> Quản lý
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ route('admin.index') }}">
+                                <i class="fa fa-cog mr-2"></i> Quản lý
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault(); this.closest('form').submit();">
+                                    <i class="fa fa-sign-out mr-2"></i> Đăng xuất
                                 </a>
-                            </li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault(); this.closest('form').submit();">
-                                        <i class="fa fa-sign-out me-2"></i> Đăng xuất
-                                    </a>
-                                </form>
-                            </li>
-                        </ul>
+                            </form>
+                        </div>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="btn user-auth-btn me-1">Đăng nhập</a>
+                    <a href="{{ route('login') }}" class="btn user-auth-btn mr-1">Đăng nhập</a>
                     <a href="{{ route('register') }}" class="btn user-auth-btn" style="background:#0f3460;">Đăng ký</a>
                 @endauth
             </div>
@@ -292,6 +284,11 @@
 <footer>
     &copy; {{ date('Y') }} LaptopStore — Khách hàng là thượng đế
 </footer>
+
+{{-- Scripts --}}
+<script src="{{ asset('library/jquery-3.7.1.js') }}"></script>
+<script src="{{ asset('library/popper.min.js') }}"></script>
+<script src="{{ asset('library/bootstrap.bundle.min.js') }}"></script>
 
 </body>
 </html>
