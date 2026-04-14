@@ -53,15 +53,21 @@ class HomeController extends Controller
         $danhMucs = DanhMuc::all();
         $tuKhoa   = $request->query('q', '');
 
+        $sort = $request->query('sort');
+
         $sanPhams = collect();
 
         if ($tuKhoa !== '') {
-            $sanPhams = SanPham::with('danhMuc')
+            $query = SanPham::with('danhMuc')
                 ->where('tieu_de', 'LIKE', '%' . $tuKhoa . '%')
-                ->orWhere('ten', 'LIKE', '%' . $tuKhoa . '%')
-                ->get();
+                ->orWhere('ten', 'LIKE', '%' . $tuKhoa . '%');
+
+            if ($sort === 'asc' || $sort === 'desc') {
+                $query->orderBy('gia', $sort);
+            }
+            $sanPhams = $query->get();
         }
 
-        return view('laptop.tim-kiem', compact('sanPhams', 'danhMucs', 'tuKhoa'));
+        return view('laptop.tim-kiem', compact('sanPhams', 'danhMucs', 'tuKhoa', 'sort'));
     }
 }

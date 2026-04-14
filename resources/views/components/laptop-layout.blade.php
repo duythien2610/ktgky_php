@@ -15,178 +15,167 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             font-size: 14px;
-            background: #f5f6fa;
+            background: #fff; /* matching image background */
         }
 
         .container-main {
-            max-width: 1000px;
+            max-width: 1200px; /* Slightly wider to fit 5 items comfortably */
             margin: 0 auto;
             padding: 0 15px;
         }
 
         /* ===== NAVBAR ===== */
-        .navbar-top {
-            background-color: #122333;
-            padding: 5px 0;
+        .navbar-custom {
+            background-color: #1a2732; /* dark blueish slate matching the image */
+            padding: 12px 0;
         }
-        .navbar-top .brand-name {
+
+        .brand-list {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .brand-list a {
             color: #fff;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.05rem;
             text-decoration: none;
+            transition: color 0.2s;
         }
-        .navbar-top .brand-name span { color: #23b85c; }
+        .brand-list a:hover {
+            color: #28a745; /* secondary color */
+        }
 
-        .search-bar {
+        .search-container {
             flex: 1;
-            max-width: 400px;
+            max-width: 320px;
             margin: 0 20px;
             position: relative;
         }
-        .search-bar input {
+        .search-container input {
             width: 100%;
-            padding: 5px 45px 5px 12px;
+            padding: 8px 40px 8px 15px;
             border: none;
             border-radius: 20px;
             background-color: white;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
+            outline: none;
         }
-        .search-btn {
-            width: 38px;
-            height: 100%;
+        .search-container button {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
             color: #333;
-            background-color: white;
-            border-radius: 0 20px 20px 0;
-            border: none;
-            position: absolute;
-            right: 0;
-            top: 0;
             cursor: pointer;
+            padding: 0;
+            font-size: 1rem;
         }
 
-        /* Cart icon */
-        .cart-wrap {
+        .cart-icon-wrap {
             position: relative;
-            color: white;
-            cursor: pointer;
+            margin-right: 25px;
+            font-size: 1.6rem;
         }
-        .cart-wrap a { color: white; }
-        #cart-number-product {
-            width: 20px;
-            height: 20px;
-            background-color: #e94560;
-            font-size: 11px;
-            border-radius: 50%;
-            position: absolute;
-            right: -2px;
-            top: -4px;
-            text-align: center;
-            line-height: 20px;
-            font-weight: bold;
-        }
-
-        /* Brand menu */
-        .brand-menu {
-            background: #0f3460;
-        }
-        .brand-menu .nav-link {
-            color: #ccc !important;
-            font-size: 0.85rem;
-            padding: 6px 14px !important;
-            border-radius: 20px;
-            transition: all 0.2s;
-        }
-        .brand-menu .nav-link:hover,
-        .brand-menu .nav-link.active-brand {
-            color: #fff !important;
-            background: #e94560;
-        }
-
-        /* Sort bar */
-        .sort-bar {
-            background: #fff;
-            border-bottom: 1px solid #ddd;
-            padding: 8px 0;
-            margin-bottom: 10px;
-        }
-        .btn-sort {
-            border-radius: 20px;
-            font-size: 0.82rem;
-            padding: 4px 14px;
-            border: 1.5px solid #0f3460;
-            color: #0f3460;
-            background: #fff;
-            margin-right: 6px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.2s;
-        }
-        .btn-sort:hover,
-        .btn-sort.active {
-            background: #0f3460;
+        .cart-icon-wrap a {
             color: #fff;
             text-decoration: none;
         }
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -12px;
+            background-color: #28a745;
+            color: white;
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
 
-        /* ===== LAPTOP GRID (class chuẩn theo yêu cầu đề) ===== */
+        .user-auth-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 15px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .user-auth-btn:hover {
+            background-color: #218838;
+            color: white;
+        }
+        .user-auth-btn.dropdown-toggle::after {
+            display: none; /* Hide default bootstrap caret as we use font-awesome */
+        }
+
+        /* ===== LAPTOP GRID ===== */
         .list-laptop {
             display: grid;
-            grid-template-columns: repeat(5, 20%);
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-top: 15px;
         }
 
         .laptop {
-            margin: 10px;
             text-align: center;
-            border-radius: 5px;
-            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
             overflow: hidden;
             cursor: pointer;
             background: #fff;
             transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none !important;
         }
         .laptop:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        }
-        .laptop a {
-            color: black;
-            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         .laptop img {
             width: 100%;
-            height: 140px;
+            height: 180px;
             object-fit: contain;
-            background: #f8f9fa;
-            padding: 8px;
+            padding: 10px;
         }
 
-        /* laptop-info: theo đề bài (class: laptop-info) */
         .laptop-info {
-            padding: 8px;
-            border-top: 1px solid #f0f0f0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
         }
         .laptop-info .laptop-title {
-            font-size: 0.78rem;
-            color: #333;
-            line-height: 1.35;
-            height: 2.7em;
+            font-size: 0.85rem;
+            color: #000;
+            font-weight: 600;
+            line-height: 1.4;
+            height: 2.8em;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            margin-bottom: 5px;
-            text-align: left;
+            margin-bottom: 8px;
+            text-align: center;
         }
         .laptop-info .laptop-price {
-            color: #e94560;
+            color: #d70018; /* Red price */
             font-weight: 700;
-            font-size: 0.9rem;
-            text-align: left;
+            font-size: 1rem;
+            text-align: center;
+            font-style: italic; /* italicize price like in the image */
         }
 
         /* Empty state */
@@ -195,59 +184,68 @@
             padding: 50px 20px;
             color: #888;
         }
-        .empty-state i { font-size: 2.5rem; margin-bottom: 12px; display: block; }
 
         footer {
-            background: #122333;
+            background: #1a2732;
             color: #aaa;
             text-align: center;
             padding: 16px;
-            margin-top: 30px;
+            margin-top: 40px;
             font-size: 0.85rem;
         }
 
         /* Responsive */
+        @media (max-width: 992px) {
+            .list-laptop { grid-template-columns: repeat(3, 1fr); }
+            .brand-list { flex-wrap: wrap; }
+        }
         @media (max-width: 768px) {
-            .list-laptop { grid-template-columns: repeat(2, 50%); }
+            .list-laptop { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 480px) {
-            .list-laptop { grid-template-columns: repeat(1, 100%); }
+            .list-laptop { grid-template-columns: repeat(1, 1fr); }
         }
     </style>
 </head>
 <body>
 
 {{-- ===== BANNER ===== --}}
-<div style="text-align:center; max-width:1000px; margin:0 auto;">
-    <img src="{{ asset('images/banner.png') }}" style="width:100%; max-height:120px; object-fit:cover;">
+<div style="background:#1a2732;">
+    <div style="text-align:center; margin:0 auto;">
+        <img src="{{ asset('images/banner.png') }}" style="width:100%; object-fit:cover; display:block;">
+    </div>
 </div>
 
-{{-- ===== NAVBAR TOP ===== --}}
-<div class="navbar-top">
-    <div class="container-main">
-        <nav style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+{{-- ===== NAVBAR ===== --}}
+<div class="navbar-custom">
+    <div class="container-main" style="display:flex; align-items:center; justify-content:space-between; flex-wrap: wrap; gap:10px;">
 
-            {{-- Logo --}}
-            <a href="{{ url('/') }}" class="brand-name">
-                <i class="fa fa-laptop"></i> Laptop<span>Store</span>
-            </a>
+        {{-- Brands Menu --}}
+        <div class="brand-list">
+            @if(isset($categories))
+                @foreach($categories as $dm)
+                    <a href="{{ url('/') }}?danh_muc={{ $dm->id }}" style="{{ request('danh_muc') == $dm->id ? 'color:#28a745;' : '' }}">
+                        {{ $dm->ten_danh_muc }}
+                    </a>
+                @endforeach
+            @endif
+        </div>
 
+        <div style="display: flex; align-items: center;">
             {{-- Tìm kiếm --}}
-            <div class="search-bar">
+            <div class="search-container">
                 <form method="GET" action="{{ url('/tim-kiem') }}">
                     <input type="text" name="q" placeholder="Tìm kiếm laptop..." value="{{ request('q') }}">
-                    <button type="submit" class="search-btn">
-                        <i class="fa fa-search"></i>
-                    </button>
+                    <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
 
             {{-- Giỏ hàng --}}
-            <div class="cart-wrap me-2">
+            <div class="cart-icon-wrap">
                 @php $soLuongGio = collect(session('cart', []))->sum('so_luong'); @endphp
-                <div id="cart-number-product">{{ $soLuongGio }}</div>
                 <a href="{{ url('/gio-hang') }}">
-                    <i class="fa fa-cart-arrow-down fa-2x"></i>
+                    <i class="fa fa-shopping-cart"></i>
+                    <span class="cart-badge">{{ $soLuongGio }}</span>
                 </a>
             </div>
 
@@ -255,67 +253,43 @@
             <div style="display:flex; align-items:center; gap:6px;">
                 @auth
                     <div class="dropdown">
-                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-bs-toggle="dropdown">
-                            {{ Auth::user()->name }}
+                        <button type="button" class="btn user-auth-btn dropdown-toggle" data-bs-toggle="dropdown">
+                            {{ Auth::user()->name }} <i class="fa fa-caret-down" style="margin-left:3px;"></i>
                         </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ url('/admin/san-pham') }}">
-                                <i class="fa fa-cog"></i> Quản lý
-                            </a>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault(); this.closest('form').submit();">
-                                    <i class="fa fa-sign-out"></i> Đăng xuất
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="{{ url('/admin/san-pham') }}">
+                                    <i class="fa fa-cog me-2"></i> Quản lý
                                 </a>
-                            </form>
-                        </div>
+                            </li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault(); this.closest('form').submit();">
+                                        <i class="fa fa-sign-out me-2"></i> Đăng xuất
+                                    </a>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 @else
-                    <a href="{{ route('login') }}">
-                        <button class="btn btn-sm btn-primary">Đăng nhập</button>
-                    </a>
-                    <a href="{{ route('register') }}">
-                        <button class="btn btn-sm btn-success">Đăng ký</button>
-                    </a>
+                    <a href="{{ route('login') }}" class="btn user-auth-btn me-1">Đăng nhập</a>
+                    <a href="{{ route('register') }}" class="btn user-auth-btn" style="background:#0f3460;">Đăng ký</a>
                 @endauth
             </div>
+        </div>
 
-        </nav>
-    </div>
-</div>
-
-{{-- ===== MENU THƯƠNG HIỆU ===== --}}
-<div class="brand-menu">
-    <div class="container-main">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link {{ !request('danh_muc') ? 'active-brand' : '' }}"
-                   href="{{ url('/') }}">
-                    <i class="fa fa-home"></i> Tất cả
-                </a>
-            </li>
-            @if(isset($danhMucs))
-                @foreach($danhMucs as $dm)
-                    <li class="nav-item">
-                        <a class="nav-link {{ request('danh_muc') == $dm->id ? 'active-brand' : '' }}"
-                           href="{{ url('/') }}?danh_muc={{ $dm->id }}">
-                            {{ $dm->ten_danh_muc }}
-                        </a>
-                    </li>
-                @endforeach
-            @endif
-        </ul>
     </div>
 </div>
 
 {{-- ===== NỘI DUNG CHÍNH ===== --}}
-<main class="container-main">
+<main class="container-main" style="padding-top: 15px;">
     {{ $slot }}
 </main>
 
 <footer>
-    &copy; {{ date('Y') }} LaptopStore — Hệ thống cửa hàng Laptop uy tín hàng đầu
+    &copy; {{ date('Y') }} LaptopStore — Khách hàng là thượng đế
 </footer>
 
 </body>
