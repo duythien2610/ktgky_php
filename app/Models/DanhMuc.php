@@ -10,6 +10,15 @@ class DanhMuc extends Model
 
     protected $fillable = ['ten_danh_muc'];
 
+    public $timestamps = false;
+
+    protected $fillable = [
+        'ten_danh_muc',
+    ];
+
+    /**
+     * Quan hệ: Danh mục có nhiều sản phẩm
+     */
     public function sanPhams()
     {
         return $this->hasMany(SanPham::class, 'id_danh_muc');
