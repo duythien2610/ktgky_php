@@ -1,3 +1,4 @@
+@props(['title' => 'Laptop Store', 'categories' => []])
 <!DOCTYPE html>
 <html lang="vi">
 <head>

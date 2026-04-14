@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class SanPham extends Model
 {
     protected $table = 'san_pham';
+    protected $primaryKey = 'id';
+    protected $guarded = [];
+    public $timestamps = false;
 
     protected $fillable = [
         'tieu_de', 'ten', 'gia', 'hinh_anh', 'id_danh_muc',
