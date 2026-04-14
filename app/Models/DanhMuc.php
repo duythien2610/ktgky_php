@@ -8,6 +8,8 @@ class DanhMuc extends Model
 {
     protected $table = 'danh_muc_laptop';
 
+    protected $fillable = ['ten_danh_muc'];
+
     public $timestamps = false;
 
     protected $fillable = [
